@@ -1,7 +1,35 @@
-from rest_framework import status, viewsets
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import status, viewsets, serializers
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from rest_framework.response import Response
+
+
+class DynamicFieldsModelSerializer(serializers.ModelSerializer):
+    """
+    A ModelSerializer that takes an additional `fields` argument that
+    controls which fields should be displayed.
+    """
+
+    def __init__(self, *args, **kwargs):
+        # Don't pass the 'fields' arg up to the superclass
+        fields = kwargs.pop('fields', None)
+        excludes = kwargs.pop('excludes', None)
+
+        # Instantiate the superclass normally
+        super(DynamicFieldsModelSerializer, self).__init__(*args, **kwargs)
+
+        if fields is not None:
+            # Drop any fields that are not specified in the `fields` argument.
+            allowed = set(fields)
+            existing = set(self.fields)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
+        elif excludes is not None:
+            removed = set(excludes)
+            for field_name in removed:
+                self.fields.pop(field_name)
 
 
 class CustomJsonRenderer(JSONRenderer):
@@ -21,7 +49,11 @@ class CustomJsonRenderer(JSONRenderer):
                 msg = self.SUCCESS_MESSAGE
                 code = self.SUCCESS_CODE
             response = renderer_context['response']
-            response.status_code = response.get('status_code', status.HTTP_200_OK)
+            response.status_code = response.status_code or response.get('status_code', status.HTTP_200_OK)
+
+            if data is not None:
+                data = data.pop('data', data)
+
             res = {
                 'code': code,
                 'msg': msg,
@@ -71,3 +103,4 @@ class BaseViewSet(viewsets.ModelViewSet):
 
     pagination_class = StandardResultsSetPagination
     renderer_classes = [CustomJsonRenderer, BrowsableAPIRenderer]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]

@@ -119,4 +119,6 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'rbac.User'
 
-REST_FRAMEWORK = {}
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'common.api.handlers.custom_exception_handler',
+}
