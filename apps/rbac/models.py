@@ -7,12 +7,20 @@ class Role(models.Model):
     角色
     """
 
-    name = models.CharField(verbose_name='角色', max_length=50, unique=True)
+    name = models.CharField(verbose_name='角色', max_length=50)
+    slug = models.CharField(verbose_name='标识', max_length=50, unique=True)
     permissions = models.ManyToManyField('Perm', verbose_name='权限', blank=True)
     menus = models.ManyToManyField('Menu', verbose_name='菜单', blank=True)
     desc = models.CharField(verbose_name='描述', max_length=50, blank=True, null=True)
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='修改时间', auto_now=True)
+
+    class Meta:
+        verbose_name = '角色'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
 
 
 class Perm(models.Model):
@@ -33,14 +41,23 @@ class Perm(models.Model):
         (POST, 'POST'),
         (PUT, 'PUT'),
         (PATCH, 'PATCH'),
-        (DELETE, 'delete'),
+        (DELETE, 'DELETE'),
     ]
 
-    name = models.CharField(verbose_name='权限名', max_length=50, unique=True)
+    name = models.CharField(verbose_name='权限名', max_length=50)
     slug = models.CharField(verbose_name='权限标识', max_length=50, unique=True)
     method = models.CharField(verbose_name='请求方法', max_length=50, choices=METHOD_CHOICES, default=ANY)
+    path = models.CharField(verbose_name='请求路径', max_length=200, null=True, blank=True)
+    desc = models.TextField(verbose_name='权限描述', null=True, blank=True)
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='修改时间', auto_now=True)
+
+    class Meta:
+        verbose_name = '权限'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
 
 
 class Menu(models.Model):
