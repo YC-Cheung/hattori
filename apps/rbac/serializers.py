@@ -19,7 +19,7 @@ class UserSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'is_active', 'roles', 'created_at', 'updated_at',)
+        fields = ('id', 'username', 'is_active', 'roles')
 
 
 class RoleSerializers(serializers.ModelSerializer):

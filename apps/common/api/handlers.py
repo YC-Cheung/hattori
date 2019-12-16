@@ -45,4 +45,4 @@ def custom_exception_handler(exc, context):
         return BaseResponse(code=4999, msg=get_error_message(exc), status_code=status.HTTP_400_BAD_REQUEST)
 
     if isinstance(exc, APIException):
-        return BaseResponse(code=exc.code, msg=exc.message, status_code=status.HTTP_400_BAD_REQUEST)
+        return BaseResponse(code=exc.code, msg=exc.message, status_code=exc.status_code or status.HTTP_400_BAD_REQUEST)

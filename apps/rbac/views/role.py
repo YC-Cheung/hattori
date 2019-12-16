@@ -1,9 +1,9 @@
-from common.custom import BaseViewSet
+from common.custom import BaseViewSet, AuthViewSet
 from rbac.models import Role
 from rbac.serializers import RoleSerializers
 
 
-class RoleViewSet(BaseViewSet):
+class RoleViewSet(AuthViewSet):
     """
     角色管理：增删改查
     """

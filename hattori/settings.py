@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'common.auth.middleware.JWTAuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'hattori.urls'
@@ -122,3 +123,5 @@ AUTH_USER_MODEL = 'rbac.User'
 REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'common.api.handlers.custom_exception_handler',
 }
+
+JWT_TTL = 60 * 60 * 24 * 365

@@ -11,4 +11,6 @@ router.register(r'menus', menu.MenuViewSet, base_name='menus')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('auth/login/', user.UserAuthView.as_view()),
+    path('auth/info/', user.UserInfoView.as_view()),
 ]

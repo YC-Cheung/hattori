@@ -4,6 +4,9 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from common.auth.authentication import BackendAuthentication
 
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
@@ -104,3 +107,25 @@ class BaseViewSet(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
     renderer_classes = [CustomJsonRenderer, BrowsableAPIRenderer]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+
+
+class AuthViewSet(BaseViewSet):
+    """
+    登录认证 ViewSet
+    """
+
+    authentication_classes = [BackendAuthentication]
+
+
+class BaseAPIView(APIView):
+    """
+    API 基类
+    """
+
+
+class AuthAPIView(BaseAPIView):
+    """
+    登录认证
+    """
+
+    authentication_classes = [BackendAuthentication]
