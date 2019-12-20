@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'common.middleware.global_request.GlobalRequestMiddleware',
     'common.auth.middleware.JWTAuthenticationMiddleware',
 ]
 
@@ -118,6 +119,24 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
+    }
+}
+
 AUTH_USER_MODEL = 'rbac.User'
 
 REST_FRAMEWORK = {
@@ -125,3 +144,4 @@ REST_FRAMEWORK = {
 }
 
 JWT_TTL = 60 * 60 * 24 * 365
+DEFAULT_PASSWORD = '123456'
