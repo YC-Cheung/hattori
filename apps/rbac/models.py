@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from common.middleware.global_request import get_request
+from rbac.mixins import ModelTreeMixin
+from rbac.utils import perm_inspector
+
 
 class Role(models.Model):
     """
@@ -10,7 +14,7 @@ class Role(models.Model):
     name = models.CharField(verbose_name='角色', max_length=50)
     slug = models.CharField(verbose_name='标识', max_length=50, unique=True)
     permissions = models.ManyToManyField('Perm', verbose_name='权限', blank=True)
-    menus = models.ManyToManyField('Menu', verbose_name='菜单', blank=True)
+    menus = models.ManyToManyField('Menu', related_name='roles', verbose_name='菜单', blank=True)
     desc = models.CharField(verbose_name='描述', max_length=50, blank=True, null=True)
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='修改时间', auto_now=True)
@@ -60,12 +64,12 @@ class Perm(models.Model):
         return self.name
 
 
-class Menu(models.Model):
+class Menu(ModelTreeMixin):
     """
     菜单
     """
 
-    pid = models.ForeignKey('self', verbose_name='父级菜单', blank=True, null=True, on_delete=models.SET_NULL)
+    parent = models.ForeignKey('self', verbose_name='父级菜单', blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(verbose_name='菜单名', max_length=50, unique=True)
     title = models.CharField(verbose_name='标题', max_length=50)
     icon = models.CharField(verbose_name='图标', max_length=50, blank=True, null=True)
@@ -76,6 +80,18 @@ class Menu(models.Model):
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='修改时间', auto_now=True)
 
+    def get_parent_field(self):
+        return 'parent_id'
+
+    def all_nodes(self):
+        nodes = self.get_manager().all().prefetch_related('roles')
+        return nodes
+
+    def ignore_tree_node(self, node):
+        role_slugs = [role.slug for role in node.roles.all()]
+        is_ignore = perm_inspector.check_role(get_request().user, role_slugs) is False
+        return is_ignore
+
 
 class User(AbstractUser):
     """
@@ -85,3 +101,10 @@ class User(AbstractUser):
     roles = models.ManyToManyField('Role', verbose_name='角色', blank=True)
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='修改时间', auto_now=True)
+
+    @property
+    def role_slugs(self):
+        roles = self.roles.all()
+        if roles is None:
+            return []
+        return [role.slug for role in roles]
