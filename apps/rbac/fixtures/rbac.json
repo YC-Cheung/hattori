@@ -1,0 +1,463 @@
+[
+    {
+        "model": "rbac.role",
+        "pk": 1,
+        "fields": {
+            "name": "超级管理员",
+            "slug": "super_admin",
+            "desc": "拥有全部权限",
+            "created_at": "2019-12-24T09:16:55.993Z",
+            "updated_at": "2019-12-24T09:16:55.993Z",
+            "perms": [
+                1
+            ],
+            "menus": []
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 1,
+        "fields": {
+            "name": "全部权限",
+            "slug": "*",
+            "method": "*",
+            "path": "*",
+            "desc": "全部权限",
+            "created_at": "2019-12-24T09:21:08.795Z",
+            "updated_at": "2019-12-24T09:21:08.795Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 2,
+        "fields": {
+            "name": "创建用户",
+            "slug": "create_user",
+            "method": "post",
+            "path": "^/users/$",
+            "desc": "创建一个后台管理用户",
+            "created_at": "2019-12-24T09:21:09.795Z",
+            "updated_at": "2019-12-24T09:21:09.795Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 3,
+        "fields": {
+            "name": "用户列表",
+            "slug": "user_list",
+            "method": "get",
+            "path": "^/users/$",
+            "desc": "获取用户列表",
+            "created_at": "2019-12-24T09:21:55.530Z",
+            "updated_at": "2019-12-24T09:21:55.530Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 4,
+        "fields": {
+            "name": "用户详情",
+            "slug": "user_detail",
+            "method": "get",
+            "path": "^/users/1/$",
+            "desc": "获取用户详情",
+            "created_at": "2019-12-24T09:23:28.658Z",
+            "updated_at": "2019-12-24T09:23:28.658Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 5,
+        "fields": {
+            "name": "修改用户",
+            "slug": "update_user",
+            "method": "patch",
+            "path": "^/users/1/$",
+            "desc": "修改用户信息",
+            "created_at": "2019-12-24T09:24:18.610Z",
+            "updated_at": "2019-12-24T09:24:18.610Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 6,
+        "fields": {
+            "name": "删除用户",
+            "slug": "delete_user",
+            "method": "delete",
+            "path": "^/users/1/$",
+            "desc": "删除一个用户",
+            "created_at": "2019-12-24T09:24:49.559Z",
+            "updated_at": "2019-12-24T09:24:49.559Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 7,
+        "fields": {
+            "name": "编辑用户角色",
+            "slug": "update_user_roles",
+            "method": "post",
+            "path": "^/users/1/roles/$",
+            "desc": "编辑用户的角色",
+            "created_at": "2019-12-24T09:27:29.314Z",
+            "updated_at": "2019-12-24T09:27:29.314Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 8,
+        "fields": {
+            "name": "创建角色",
+            "slug": "create_role",
+            "method": "post",
+            "path": "^/roles/$",
+            "desc": "创建一个角色",
+            "created_at": "2019-12-24T09:32:50.860Z",
+            "updated_at": "2019-12-24T09:32:50.860Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 9,
+        "fields": {
+            "name": "角色列表",
+            "slug": "role_list",
+            "method": "get",
+            "path": "^/roles/$",
+            "desc": "获取角色列表",
+            "created_at": "2019-12-24T09:33:37.696Z",
+            "updated_at": "2019-12-24T09:33:37.696Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 10,
+        "fields": {
+            "name": "角色详情",
+            "slug": "role_detail",
+            "method": "get",
+            "path": "^/roles/1/$",
+            "desc": "获取角色详情",
+            "created_at": "2019-12-24T09:34:17.776Z",
+            "updated_at": "2019-12-24T09:34:17.776Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 11,
+        "fields": {
+            "name": "编辑角色",
+            "slug": "update_role",
+            "method": "patch",
+            "path": "^/roles/1/$",
+            "desc": "编辑一个角色",
+            "created_at": "2019-12-24T09:35:11.396Z",
+            "updated_at": "2019-12-24T09:35:11.396Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 12,
+        "fields": {
+            "name": "删除角色",
+            "slug": "delete_role",
+            "method": "delete",
+            "path": "^/roles/1/$",
+            "desc": "删除一个角色",
+            "created_at": "2019-12-24T09:37:04.848Z",
+            "updated_at": "2019-12-24T09:37:04.848Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 13,
+        "fields": {
+            "name": "编辑角色权限",
+            "slug": "update_role_perms",
+            "method": "post",
+            "path": "^/roles/1/perms/$",
+            "desc": "编辑角色的权限",
+            "created_at": "2019-12-24T09:37:47.547Z",
+            "updated_at": "2019-12-24T09:37:47.547Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 14,
+        "fields": {
+            "name": "编辑角色菜单",
+            "slug": "update_role_menus",
+            "method": "post",
+            "path": "^/roles/1/menus/$",
+            "desc": "编辑角色的菜单",
+            "created_at": "2019-12-24T09:38:33.286Z",
+            "updated_at": "2019-12-24T09:38:33.286Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 15,
+        "fields": {
+            "name": "创建权限",
+            "slug": "create_perm",
+            "method": "post",
+            "path": "^/perms/$",
+            "desc": "创建一个权限",
+            "created_at": "2019-12-24T09:40:08.178Z",
+            "updated_at": "2019-12-24T09:40:08.178Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 16,
+        "fields": {
+            "name": "权限列表",
+            "slug": "perm_list",
+            "method": "get",
+            "path": "^/perms/$",
+            "desc": "获取权限列表",
+            "created_at": "2019-12-24T09:40:51.795Z",
+            "updated_at": "2019-12-24T09:40:51.795Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 17,
+        "fields": {
+            "name": "权限详情",
+            "slug": "perm_detail",
+            "method": "get",
+            "path": "^/perms/1/$",
+            "desc": "获取权限详情",
+            "created_at": "2019-12-24T09:41:30.711Z",
+            "updated_at": "2019-12-24T09:41:30.711Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 18,
+        "fields": {
+            "name": "编辑权限",
+            "slug": "update_perm",
+            "method": "patch",
+            "path": "^/perms/1/$",
+            "desc": "编辑一个权限",
+            "created_at": "2019-12-24T09:42:13.190Z",
+            "updated_at": "2019-12-24T09:42:13.190Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 19,
+        "fields": {
+            "name": "删除权限",
+            "slug": "delete_perm",
+            "method": "delete",
+            "path": "^/perms/1/$",
+            "desc": "删除一个权限",
+            "created_at": "2019-12-24T09:43:20.258Z",
+            "updated_at": "2019-12-24T09:43:20.258Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 20,
+        "fields": {
+            "name": "编辑权限角色",
+            "slug": "update_perm_roles",
+            "method": "post",
+            "path": "^/perms/1/roles/$",
+            "desc": "分配这个权限给角色",
+            "created_at": "2019-12-24T09:51:42.041Z",
+            "updated_at": "2019-12-24T09:51:42.041Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 21,
+        "fields": {
+            "name": "创建菜单",
+            "slug": "create_menu",
+            "method": "post",
+            "path": "^/menus/$",
+            "desc": "创建一个菜单",
+            "created_at": "2019-12-24T10:43:32.854Z",
+            "updated_at": "2019-12-24T10:43:32.854Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 22,
+        "fields": {
+            "name": "菜单列表",
+            "slug": "menu_list",
+            "method": "get",
+            "path": "^/menus/$",
+            "desc": "获取菜单列表",
+            "created_at": "2019-12-24T10:44:06.754Z",
+            "updated_at": "2019-12-24T10:44:06.754Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 23,
+        "fields": {
+            "name": "菜单详情",
+            "slug": "menu_detail",
+            "method": "get",
+            "path": "^/menus/1/$",
+            "desc": "获取菜单详情",
+            "created_at": "2019-12-24T10:44:50.927Z",
+            "updated_at": "2019-12-24T10:44:50.927Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 24,
+        "fields": {
+            "name": "编辑菜单",
+            "slug": "update_menu",
+            "method": "patch",
+            "path": "^/menus/1/$",
+            "desc": "编辑一个菜单",
+            "created_at": "2019-12-24T10:45:45.246Z",
+            "updated_at": "2019-12-24T10:45:45.246Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 25,
+        "fields": {
+            "name": "删除菜单",
+            "slug": "delete_menu",
+            "method": "delete",
+            "path": "^/menus/1/$",
+            "desc": "删除一个菜单",
+            "created_at": "2019-12-24T10:47:15.219Z",
+            "updated_at": "2019-12-24T10:47:15.219Z"
+        }
+    },
+    {
+        "model": "rbac.perm",
+        "pk": 26,
+        "fields": {
+            "name": "编辑菜单角色",
+            "slug": "update_menu_roles",
+            "method": "post",
+            "path": "^/menus/1/roles/$",
+            "desc": "编辑一个菜单的角色",
+            "created_at": "2019-12-24T10:48:21.996Z",
+            "updated_at": "2019-12-24T10:48:21.996Z"
+        }
+    },
+    {
+        "model": "rbac.menu",
+        "pk": 1,
+        "fields": {
+            "parent": null,
+            "name": "System",
+            "title": "系统",
+            "icon": "",
+            "path": "/system",
+            "component": "Layout",
+            "is_show": true,
+            "is_cache": false,
+            "sort": 0,
+            "created_at": "2019-12-24T11:02:20.111Z",
+            "updated_at": "2019-12-24T11:02:20.111Z"
+        }
+    },
+    {
+        "model": "rbac.menu",
+        "pk": 2,
+        "fields": {
+            "parent": 1,
+            "name": "SystemUser",
+            "title": "用户管理",
+            "icon": "user",
+            "path": "user",
+            "component": "system/user/index",
+            "is_show": true,
+            "is_cache": false,
+            "sort": 1,
+            "created_at": "2019-12-24T11:19:46.286Z",
+            "updated_at": "2019-12-24T11:29:49.159Z"
+        }
+    },
+    {
+        "model": "rbac.menu",
+        "pk": 3,
+        "fields": {
+            "parent": 1,
+            "name": "SystemRole",
+            "title": "角色管理",
+            "icon": "role",
+            "path": "role",
+            "component": "system/role/index",
+            "is_show": true,
+            "is_cache": false,
+            "sort": 2,
+            "created_at": "2019-12-24T11:28:58.654Z",
+            "updated_at": "2019-12-24T11:30:53.279Z"
+        }
+    },
+    {
+        "model": "rbac.menu",
+        "pk": 4,
+        "fields": {
+            "parent": 1,
+            "name": "SystemPerm",
+            "title": "权限管理",
+            "icon": "perm",
+            "path": "perm",
+            "component": "system/perm/index",
+            "is_show": true,
+            "is_cache": false,
+            "sort": 3,
+            "created_at": "2019-12-24T11:31:54.715Z",
+            "updated_at": "2019-12-24T11:31:54.715Z"
+        }
+    },
+    {
+        "model": "rbac.menu",
+        "pk": 5,
+        "fields": {
+            "parent": 1,
+            "name": "SystemMenu",
+            "title": "菜单管理",
+            "icon": "menu",
+            "path": "menu",
+            "component": "system/menu/index",
+            "is_show": true,
+            "is_cache": false,
+            "sort": 4,
+            "created_at": "2019-12-24T11:32:57.188Z",
+            "updated_at": "2019-12-24T11:32:57.188Z"
+        }
+    },
+    {
+        "model": "rbac.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$180000$R5PJFIZEtitS$GphncX3Q+fPqxYhJCZRnfobD5XuUMmKNdF9C2RfQYU8=",
+            "last_login": null,
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "email": "admin@admin.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2019-12-24T12:05:59.504Z",
+            "created_at": "2019-12-24T12:05:59.623Z",
+            "updated_at": "2019-12-24T12:05:59.623Z",
+            "groups": [],
+            "user_permissions": [],
+            "roles": [
+                1
+            ]
+        }
+    }
+]
