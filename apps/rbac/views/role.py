@@ -1,12 +1,12 @@
 from rest_framework.decorators import action
 
 from common.api.base import BaseResponse
-from common.custom import AuthViewSet
+from common.custom import AuthViewSet, RbacViewSet
 from rbac.models import Role
 from rbac.serializers import RoleSerializers
 
 
-class RoleViewSet(AuthViewSet):
+class RoleViewSet(RbacViewSet):
     """
     角色管理：增删改查
     """
@@ -28,7 +28,7 @@ class RoleViewSet(AuthViewSet):
 
         role = self.get_object()
         perms = request.data.get('perms')
-        role.permissions.set(perms)
+        role.perms.set(perms)
         return BaseResponse()
 
     @action(detail=True, methods=['post'], url_path='menus')

@@ -9,6 +9,7 @@ class GlobalRequestMiddleware(object):
         self.get_response = get_response
 
     def __call__(self, request):
+        print(f'{request.method}: {request.path_info}')
         GLOBAL_REQUEST_KEEPER.request = request
         try:
             return self.get_response(request)

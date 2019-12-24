@@ -31,7 +31,7 @@ class UserSerializers(serializers.ModelSerializer):
     roles = serializers.SerializerMethodField()
 
     def get_roles(self, obj):
-        return obj.roles.values()
+        return obj.roles.values('id', 'name', 'slug')
 
     def create(self, validated_data):
         validated_data['password'] = make_password(validated_data.get('password'))

@@ -13,7 +13,7 @@ class Role(models.Model):
 
     name = models.CharField(verbose_name='角色', max_length=50)
     slug = models.CharField(verbose_name='标识', max_length=50, unique=True)
-    permissions = models.ManyToManyField('Perm', verbose_name='权限', blank=True)
+    perms = models.ManyToManyField('Perm', verbose_name='权限', blank=True)
     menus = models.ManyToManyField('Menu', related_name='roles', verbose_name='菜单', blank=True)
     desc = models.CharField(verbose_name='描述', max_length=50, blank=True, null=True)
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)

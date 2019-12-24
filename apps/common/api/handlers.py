@@ -1,6 +1,6 @@
 from django.http import Http404
 from rest_framework import status
-from rest_framework.exceptions import ValidationError, NotFound
+from rest_framework.exceptions import ValidationError, NotFound, PermissionDenied
 from rest_framework.views import exception_handler
 
 from common.api.base import BaseResponse
@@ -44,5 +44,10 @@ def custom_exception_handler(exc, context):
     if isinstance(exc, ValidationError):
         return BaseResponse(code=4999, msg=get_error_message(exc), status_code=status.HTTP_400_BAD_REQUEST)
 
+    if isinstance(exc, PermissionDenied):
+        return BaseResponse(code=4999, msg='没有访问权限', status_code=status.HTTP_403_FORBIDDEN)
+
     if isinstance(exc, APIException):
         return BaseResponse(code=exc.code, msg=exc.message, status_code=exc.status_code or status.HTTP_400_BAD_REQUEST)
+
+    return None

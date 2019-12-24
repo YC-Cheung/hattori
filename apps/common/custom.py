@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from common.auth.authentication import BackendAuthentication
+from rbac.permissions import RbacPermission
 
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
@@ -115,6 +116,14 @@ class AuthViewSet(BaseViewSet):
     """
 
     authentication_classes = [BackendAuthentication]
+
+
+class RbacViewSet(AuthViewSet):
+    """
+    权限认证 ViewSet
+    """
+
+    permission_classes = [RbacPermission]
 
 
 class BaseAPIView(APIView):
