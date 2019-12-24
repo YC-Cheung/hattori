@@ -1,7 +1,7 @@
 from rest_framework.decorators import action
 
 from common.api.base import BaseResponse
-from common.custom import AuthViewSet, RbacViewSet
+from common.custom import RbacViewSet
 from rbac.models import Role
 from rbac.serializers import RoleSerializers
 

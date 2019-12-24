@@ -146,4 +146,4 @@ class MenuSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Menu
-        fields = ('id', 'parent_id', 'name', 'title', 'icon', 'path', 'component', 'is_show', 'is_cache')
+        fields = ('id', 'parent', 'name', 'title', 'icon', 'path', 'component', 'is_show', 'is_cache')

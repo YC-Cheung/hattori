@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 from common.middleware.global_request import get_request
 from rbac.mixins import ModelTreeMixin
-from rbac.utils import perm_inspector
+from rbac.utils import perm_inspector, menu_tree_to_vue
 
 
 class Role(models.Model):
@@ -13,7 +13,7 @@ class Role(models.Model):
 
     name = models.CharField(verbose_name='角色', max_length=50)
     slug = models.CharField(verbose_name='标识', max_length=50, unique=True)
-    perms = models.ManyToManyField('Perm', verbose_name='权限', blank=True)
+    perms = models.ManyToManyField('Perm', related_name='roles', verbose_name='权限', blank=True)
     menus = models.ManyToManyField('Menu', related_name='roles', verbose_name='菜单', blank=True)
     desc = models.CharField(verbose_name='描述', max_length=50, blank=True, null=True)
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
@@ -77,6 +77,7 @@ class Menu(ModelTreeMixin):
     component = models.CharField(verbose_name='组件', max_length=50)
     is_show = models.BooleanField(verbose_name='是否显示', default=True)
     is_cache = models.BooleanField(verbose_name='是否缓存', default=False)
+    sort = models.IntegerField(verbose_name='排序', default=0, null=True, blank=True)
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='修改时间', auto_now=True)
 
@@ -108,3 +109,22 @@ class User(AbstractUser):
         if roles is None:
             return []
         return [role.slug for role in roles]
+
+    @property
+    def perm_slugs(self):
+        perms = self.roles.filter(perms__slug__isnull=False).values('perms__slug').distinct()
+        if not perms:
+            return []
+
+        return [p['perms__slug'] for p in perms]
+
+    @property
+    def info(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'is_active': self.is_active,
+            'roles': self.role_slugs,
+            'perms': self.perm_slugs,
+            'menu': menu_tree_to_vue(Menu().to_tree()),
+        }

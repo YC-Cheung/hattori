@@ -7,14 +7,14 @@ from rest_framework.response import Response
 from common.api.base import BaseResponse
 from common.api.exceptions import AuthFailedException, APIException
 from common.auth import generate_token
-from common.custom import BaseAPIView, AuthAPIView, AuthViewSet
+from common.custom import BaseAPIView, AuthAPIView, RbacViewSet
 from common.enums import JwtType
 from rbac.serializers import UserSerializers
 
 User = get_user_model()
 
 
-class UserViewSet(AuthViewSet):
+class UserViewSet(RbacViewSet):
     """
     用户管理：增删改查
     """
@@ -92,4 +92,4 @@ class UserInfoView(AuthAPIView):
 
     def get(self, request):
         user = request.user
-        return BaseResponse(data=UserSerializers(user).data)
+        return BaseResponse(data=user.info)
