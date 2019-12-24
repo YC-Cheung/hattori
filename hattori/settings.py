@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rbac',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +49,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'common.middleware.global_request.GlobalRequestMiddleware',
+    'common.auth.middleware.JWTAuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'hattori.urls'
@@ -114,3 +118,32 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
+    }
+}
+
+AUTH_USER_MODEL = 'rbac.User'
+
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'common.api.handlers.custom_exception_handler',
+}
+
+JWT_TTL = 60 * 60 * 24 * 365
+DEFAULT_PASSWORD = '123456'
+
+RBAC_URL_WHITE_LIST = []
