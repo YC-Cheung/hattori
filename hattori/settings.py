@@ -143,7 +143,7 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'common.api.handlers.custom_exception_handler',
 }
 
-JWT_TTL = 60 * 60 * 24 * 365
+JWT_TTL = 20
 DEFAULT_PASSWORD = '123456'
 
 RBAC_URL_WHITE_LIST = []
