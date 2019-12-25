@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from jwt import ExpiredSignatureError
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.request import WrappedAttributeError
 

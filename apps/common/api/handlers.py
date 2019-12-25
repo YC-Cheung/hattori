@@ -4,7 +4,7 @@ from rest_framework.exceptions import ValidationError, NotFound, PermissionDenie
 from rest_framework.views import exception_handler
 
 from common.api.base import BaseResponse
-from common.api.exceptions import APIException
+from common.api.exceptions import APIException, AuthFailedException
 
 
 def get_error_message(exception):
@@ -43,6 +43,9 @@ def custom_exception_handler(exc, context):
 
     if isinstance(exc, ValidationError):
         return BaseResponse(code=4999, msg=get_error_message(exc), status_code=status.HTTP_400_BAD_REQUEST)
+
+    if isinstance(exc, AuthFailedException):
+        return BaseResponse(code=4001, msg=exc.message, status_code=exc.status_code or status.HTTP_401_UNAUTHORIZED)
 
     if isinstance(exc, PermissionDenied):
         return BaseResponse(code=4999, msg='没有访问权限', status_code=status.HTTP_403_FORBIDDEN)
