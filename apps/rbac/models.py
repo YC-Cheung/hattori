@@ -126,5 +126,5 @@ class User(AbstractUser):
             'is_active': self.is_active,
             'roles': self.role_slugs,
             'perms': self.perm_slugs,
-            'menu': menu_tree_to_vue(Menu().to_tree()),
+            'menus': menu_tree_to_vue(Menu().to_tree()),
         }
