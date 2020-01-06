@@ -44,3 +44,14 @@ class RoleViewSet(RbacViewSet):
         menus = request.data.get('menus')
         role.menus.set(menus)
         return BaseResponse()
+
+    @action(detail=False, methods=['get'], url_path='options')
+    def get_options(self, request, pk=None):
+        """
+        获取角色选项列表
+        :param request:
+        :param pk:
+        :return:
+        """
+
+        role = self.get_object()
