@@ -30,19 +30,31 @@ class UserSerializers(serializers.ModelSerializer):
     )
     roles = serializers.SerializerMethodField()
 
+    # role_ids = serializers.PrimaryKeyRelatedField(queryset=Role.objects.all(), write_only=True, many=True)
+
     def get_roles(self, obj):
         return obj.roles.values('id', 'name', 'slug')
 
     def create(self, validated_data):
         validated_data['password'] = make_password(validated_data.get('password'))
-        return super(UserSerializers, self).create(validated_data)
+        instance = super(UserSerializers, self).create(validated_data)
+        return instance
+        # role_ids = validated_data.pop('role_ids')
+        # if role_ids:
+        #     instance.roles.set(role_ids)
+        # return instance
 
     def update(self, instance, validated_data):
         validated_data.pop('username')
         password = validated_data.get('password', None)
         if password is not None:
             validated_data['password'] = make_password(password)
-        return super(UserSerializers, self).update(instance, validated_data)
+        instance = super(UserSerializers, self).update(instance, validated_data)
+        return instance
+        # role_ids = validated_data.pop('role_ids')
+        # if role_ids:
+        #     instance.roles.set(role_ids)
+        # return instance
 
     class Meta:
         model = User

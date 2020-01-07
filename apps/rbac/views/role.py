@@ -46,12 +46,12 @@ class RoleViewSet(RbacViewSet):
         return BaseResponse()
 
     @action(detail=False, methods=['get'], url_path='options')
-    def get_options(self, request, pk=None):
+    def get_options(self, request):
         """
         获取角色选项列表
         :param request:
-        :param pk:
         :return:
         """
 
-        role = self.get_object()
+        roles = Role.objects.all().order_by('id')
+        return BaseResponse(data=RoleSerializers(roles, many=True).data)
