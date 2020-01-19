@@ -30,3 +30,14 @@ class PermViewSet(RbacViewSet):
         roles = request.data.get('roles')
         perm.roles.set(roles)
         return BaseResponse()
+
+    @action(detail=False, methods=['get'], url_path='options')
+    def get_options(self, request):
+        """
+        获取角色选项列表
+        :param request:
+        :return:
+        """
+
+        roles = Perm.objects.all().order_by('id')
+        return BaseResponse(data=PermSerializers(roles, many=True).data)

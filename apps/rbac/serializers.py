@@ -3,6 +3,7 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
+from common.custom import DynamicFieldsModelSerializer
 from rbac.models import Role, Perm, Menu
 
 User = get_user_model()
@@ -33,7 +34,8 @@ class UserSerializers(serializers.ModelSerializer):
     # role_ids = serializers.PrimaryKeyRelatedField(queryset=Role.objects.all(), write_only=True, many=True)
 
     def get_roles(self, obj):
-        return obj.roles.values('id', 'name', 'slug')
+        return [{'id': i.id, 'name': i.name, 'slug': i.slug} for i in obj.roles.all()]
+        # return obj.roles.values('id', 'name', 'slug')
 
     def create(self, validated_data):
         validated_data['password'] = make_password(validated_data.get('password'))
@@ -87,6 +89,25 @@ class RoleSerializers(serializers.ModelSerializer):
     class Meta:
         model = Role
         fields = ('id', 'name', 'slug', 'desc')
+
+
+class RoleWithAllFieldsSerializer(DynamicFieldsModelSerializer):
+    """
+    角色 带全部字段
+    """
+
+    perms = serializers.SerializerMethodField()
+    menus = serializers.SerializerMethodField()
+
+    def get_perms(self, obj):
+        return [{'id': i.id, 'name': i.name, 'slug': i.slug} for i in obj.perms.all()]
+
+    def get_menus(self, obj):
+        return [{'id': i.id, 'name': i.name, 'title': i.title} for i in obj.menus.all()]
+
+    class Meta:
+        model = Role
+        fields = ('id', 'name', 'slug', 'desc', 'perms', 'menus', 'created_at', 'updated_at')
 
 
 class PermSerializers(serializers.ModelSerializer):

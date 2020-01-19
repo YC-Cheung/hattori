@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from common.api.base import BaseResponse
 from common.custom import RbacViewSet
 from rbac.models import Role
-from rbac.serializers import RoleSerializers
+from rbac.serializers import RoleSerializers, RoleWithAllFieldsSerializer
 
 
 class RoleViewSet(RbacViewSet):
@@ -11,11 +11,16 @@ class RoleViewSet(RbacViewSet):
     角色管理：增删改查
     """
 
-    queryset = Role.objects.all()
+    queryset = Role.objects.prefetch_related('perms', 'menus').all()
     serializer_class = RoleSerializers
     filter_fields = ['name']
     search_fields = ['name']
     ordering_fields = ['id']
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return RoleWithAllFieldsSerializer
+        return RoleSerializers
 
     @action(detail=True, methods=['post'], url_path='perms')
     def set_perms(self, request, pk=None):

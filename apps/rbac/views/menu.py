@@ -43,3 +43,14 @@ class MenuViewSet(RbacViewSet):
         roles = request.data.get('roles')
         menu.roles.set(roles)
         return BaseResponse()
+
+    @action(detail=False, methods=['get'], url_path='options')
+    def get_options(self, request):
+        """
+        获取菜单选项列表
+        :param request:
+        :return:
+        """
+
+        menus = Menu.objects.all().order_by('id')
+        return BaseResponse(data=MenuSerializers(menus, many=True).data)

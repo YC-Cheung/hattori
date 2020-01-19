@@ -19,7 +19,7 @@ class UserViewSet(RbacViewSet):
     用户管理：增删改查
     """
 
-    queryset = User.objects.all()
+    queryset = User.objects.prefetch_related('roles').all()
     serializer_class = UserSerializers
 
     @action(methods=['post'], detail=True, url_path='roles')

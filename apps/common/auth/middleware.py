@@ -1,7 +1,7 @@
 import logging
 
 from django.http import JsonResponse
-from jwt import DecodeError, ExpiredSignatureError
+from jwt import DecodeError, ExpiredSignatureError, InvalidAlgorithmError
 from rest_framework import status
 
 from common.auth import bearer_token, verify_token
@@ -30,6 +30,11 @@ class JWTAuthenticationMiddleware:
             except ExpiredSignatureError as e:
                 return JsonResponse(
                     data={'code': 4001, 'msg': '登录已失效，请重新登录', 'data': None},
+                    status=status.HTTP_401_UNAUTHORIZED
+                )
+            except InvalidAlgorithmError as e:
+                return JsonResponse(
+                    data={'code': 4001, 'msg': '认证信息不合法', 'data': None},
                     status=status.HTTP_401_UNAUTHORIZED
                 )
 
