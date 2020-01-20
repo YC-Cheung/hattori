@@ -138,6 +138,21 @@ class PermSerializers(serializers.ModelSerializer):
         fields = ('id', 'name', 'slug', 'desc', 'method', 'path')
 
 
+class PermWithAllFieldsSerializer(DynamicFieldsModelSerializer):
+    """
+    权限 带全部字段
+    """
+
+    roles = serializers.SerializerMethodField()
+
+    def get_roles(self, obj):
+        return [{'id': i.id, 'name': i.name, 'slug': i.slug} for i in obj.roles.all()]
+
+    class Meta:
+        model = Perm
+        fields = ('id', 'name', 'slug', 'desc', 'method', 'path', 'roles', 'created_at', 'updated_at')
+
+
 class MenuSerializers(serializers.ModelSerializer):
     """
     菜单
@@ -180,3 +195,20 @@ class MenuSerializers(serializers.ModelSerializer):
     class Meta:
         model = Menu
         fields = ('id', 'parent', 'name', 'title', 'icon', 'path', 'component', 'is_show', 'is_cache')
+
+
+class MenuWithAllFieldsSerializers(DynamicFieldsModelSerializer):
+    """
+    菜单 全字段
+    """
+
+    roles = serializers.SerializerMethodField()
+
+    def get_roles(self, obj):
+        return [{'id': i.id, 'name': i.name, 'slug': i.slug} for i in obj.roles.all()]
+
+    class Meta:
+        model = Menu
+        fields = (
+            'id', 'parent', 'name', 'title', 'icon', 'path', 'component', 'is_show', 'is_cache', 'roles', 'created_at',
+            'updated_at')
