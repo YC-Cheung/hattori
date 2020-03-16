@@ -85,7 +85,7 @@ class Menu(ModelTreeMixin):
         return 'parent_id'
 
     def all_nodes(self):
-        nodes = self.get_manager().all().prefetch_related('roles')
+        nodes = self.get_manager().prefetch_related('roles').all()
         return nodes
 
     def ignore_tree_node(self, node):

@@ -27,7 +27,7 @@ class BackendAuthentication(BaseAuthentication):
 
         try:
             uid = payload.get('uid')
-            user = User.objects.get(id=uid)
+            user = User.objects.prefetch_related('roles').get(id=uid)
         except User.DoesNotExist:
             raise AuthFailedException(message='请登录')
         if not user.is_active:
