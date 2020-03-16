@@ -22,6 +22,11 @@ class RoleViewSet(RbacViewSet):
             return RoleWithAllFieldsSerializer
         return RoleSerializers
 
+    def get_permissions(self):
+        if self.request.path_info == '/roles/options/':
+            self.permission_classes = []
+        return [permission() for permission in self.permission_classes]
+
     @action(detail=True, methods=['post'], url_path='perms')
     def set_perms(self, request, pk=None):
         """
