@@ -60,7 +60,7 @@
             "name": "用户详情",
             "slug": "user_detail",
             "method": "get",
-            "path": "^/users/1/$",
+            "path": "^/users/[1-9]\\d/$",
             "desc": "获取用户详情",
             "created_at": "2019-12-24T09:23:28.658Z",
             "updated_at": "2019-12-24T09:23:28.658Z"
@@ -73,7 +73,7 @@
             "name": "修改用户",
             "slug": "update_user",
             "method": "patch",
-            "path": "^/users/1/$",
+            "path": "^/users/[1-9]\\d/$",
             "desc": "修改用户信息",
             "created_at": "2019-12-24T09:24:18.610Z",
             "updated_at": "2019-12-24T09:24:18.610Z"
@@ -86,7 +86,7 @@
             "name": "删除用户",
             "slug": "delete_user",
             "method": "delete",
-            "path": "^/users/1/$",
+            "path": "^/users/[1-9]\\d/$",
             "desc": "删除一个用户",
             "created_at": "2019-12-24T09:24:49.559Z",
             "updated_at": "2019-12-24T09:24:49.559Z"
@@ -99,7 +99,7 @@
             "name": "编辑用户角色",
             "slug": "update_user_roles",
             "method": "post",
-            "path": "^/users/1/roles/$",
+            "path": "^/users/[1-9]\\d/roles/$",
             "desc": "编辑用户的角色",
             "created_at": "2019-12-24T09:27:29.314Z",
             "updated_at": "2019-12-24T09:27:29.314Z"
@@ -138,7 +138,7 @@
             "name": "角色详情",
             "slug": "role_detail",
             "method": "get",
-            "path": "^/roles/1/$",
+            "path": "^/roles/[1-9]\\d/$",
             "desc": "获取角色详情",
             "created_at": "2019-12-24T09:34:17.776Z",
             "updated_at": "2019-12-24T09:34:17.776Z"
@@ -151,7 +151,7 @@
             "name": "编辑角色",
             "slug": "update_role",
             "method": "patch",
-            "path": "^/roles/1/$",
+            "path": "^/roles/[1-9]\\d/$",
             "desc": "编辑一个角色",
             "created_at": "2019-12-24T09:35:11.396Z",
             "updated_at": "2019-12-24T09:35:11.396Z"
@@ -164,7 +164,7 @@
             "name": "删除角色",
             "slug": "delete_role",
             "method": "delete",
-            "path": "^/roles/1/$",
+            "path": "^/roles/[1-9]\\d/$",
             "desc": "删除一个角色",
             "created_at": "2019-12-24T09:37:04.848Z",
             "updated_at": "2019-12-24T09:37:04.848Z"
@@ -177,7 +177,7 @@
             "name": "编辑角色权限",
             "slug": "update_role_perms",
             "method": "post",
-            "path": "^/roles/1/perms/$",
+            "path": "^/roles/[1-9]\\d/perms/$",
             "desc": "编辑角色的权限",
             "created_at": "2019-12-24T09:37:47.547Z",
             "updated_at": "2019-12-24T09:37:47.547Z"
@@ -190,7 +190,7 @@
             "name": "编辑角色菜单",
             "slug": "update_role_menus",
             "method": "post",
-            "path": "^/roles/1/menus/$",
+            "path": "^/roles/[1-9]\\d/menus/$",
             "desc": "编辑角色的菜单",
             "created_at": "2019-12-24T09:38:33.286Z",
             "updated_at": "2019-12-24T09:38:33.286Z"
@@ -229,7 +229,7 @@
             "name": "权限详情",
             "slug": "perm_detail",
             "method": "get",
-            "path": "^/perms/1/$",
+            "path": "^/perms/[1-9]\\d/$",
             "desc": "获取权限详情",
             "created_at": "2019-12-24T09:41:30.711Z",
             "updated_at": "2019-12-24T09:41:30.711Z"
@@ -242,7 +242,7 @@
             "name": "编辑权限",
             "slug": "update_perm",
             "method": "patch",
-            "path": "^/perms/1/$",
+            "path": "^/perms/[1-9]\\d/$",
             "desc": "编辑一个权限",
             "created_at": "2019-12-24T09:42:13.190Z",
             "updated_at": "2019-12-24T09:42:13.190Z"
@@ -255,7 +255,7 @@
             "name": "删除权限",
             "slug": "delete_perm",
             "method": "delete",
-            "path": "^/perms/1/$",
+            "path": "^/perms/[1-9]\\d/$",
             "desc": "删除一个权限",
             "created_at": "2019-12-24T09:43:20.258Z",
             "updated_at": "2019-12-24T09:43:20.258Z"
@@ -268,7 +268,7 @@
             "name": "编辑权限角色",
             "slug": "update_perm_roles",
             "method": "post",
-            "path": "^/perms/1/roles/$",
+            "path": "^/perms/[1-9]\\d/roles/$",
             "desc": "分配这个权限给角色",
             "created_at": "2019-12-24T09:51:42.041Z",
             "updated_at": "2019-12-24T09:51:42.041Z"
@@ -307,7 +307,7 @@
             "name": "菜单详情",
             "slug": "menu_detail",
             "method": "get",
-            "path": "^/menus/1/$",
+            "path": "^/menus/[1-9]\\d/$",
             "desc": "获取菜单详情",
             "created_at": "2019-12-24T10:44:50.927Z",
             "updated_at": "2019-12-24T10:44:50.927Z"
@@ -320,7 +320,7 @@
             "name": "编辑菜单",
             "slug": "update_menu",
             "method": "patch",
-            "path": "^/menus/1/$",
+            "path": "^/menus/[1-9]\\d/$",
             "desc": "编辑一个菜单",
             "created_at": "2019-12-24T10:45:45.246Z",
             "updated_at": "2019-12-24T10:45:45.246Z"
@@ -333,7 +333,7 @@
             "name": "删除菜单",
             "slug": "delete_menu",
             "method": "delete",
-            "path": "^/menus/1/$",
+            "path": "^/menus/[1-9]\\d/$",
             "desc": "删除一个菜单",
             "created_at": "2019-12-24T10:47:15.219Z",
             "updated_at": "2019-12-24T10:47:15.219Z"
@@ -346,7 +346,7 @@
             "name": "编辑菜单角色",
             "slug": "update_menu_roles",
             "method": "post",
-            "path": "^/menus/1/roles/$",
+            "path": "^/menus/[1-9]\\d/roles/$",
             "desc": "编辑一个菜单的角色",
             "created_at": "2019-12-24T10:48:21.996Z",
             "updated_at": "2019-12-24T10:48:21.996Z"
@@ -393,7 +393,7 @@
             "parent": 1,
             "name": "SystemRole",
             "title": "角色管理",
-            "icon": "role",
+            "icon": "peoples",
             "path": "role",
             "component": "system/role/index",
             "is_show": true,
@@ -410,7 +410,7 @@
             "parent": 1,
             "name": "SystemPerm",
             "title": "权限管理",
-            "icon": "perm",
+            "icon": "lock",
             "path": "perm",
             "component": "system/perm/index",
             "is_show": true,

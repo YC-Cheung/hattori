@@ -85,7 +85,7 @@ class Menu(ModelTreeMixin):
         return 'parent_id'
 
     def all_nodes(self):
-        nodes = self.get_manager().all().prefetch_related('roles')
+        nodes = self.get_manager().prefetch_related('roles').all()
         return nodes
 
     def ignore_tree_node(self, node):
@@ -126,5 +126,5 @@ class User(AbstractUser):
             'is_active': self.is_active,
             'roles': self.role_slugs,
             'perms': self.perm_slugs,
-            'menu': menu_tree_to_vue(Menu().to_tree()),
+            'menus': menu_tree_to_vue(Menu().to_tree()),
         }

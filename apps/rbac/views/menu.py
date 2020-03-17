@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from common.api.base import BaseResponse
 from common.custom import RbacViewSet
 from rbac.models import Menu
-from rbac.serializers import MenuSerializers
+from rbac.serializers import MenuSerializers, MenuWithAllFieldsSerializers
 from rbac.utils import menu_tree_to_vue
 
 
@@ -12,11 +12,16 @@ class MenuViewSet(RbacViewSet):
     菜单管理：增删改查
     """
 
-    queryset = Menu.objects.all()
+    queryset = Menu.objects.prefetch_related('roles').all()
     serializer_class = MenuSerializers
     filter_fields = ['name', 'title']
     search_fields = ['name', 'title']
     ordering_fields = ['id']
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return MenuWithAllFieldsSerializers
+        return MenuSerializers
 
     @action(detail=False, methods=['get'], url_path='tree')
     def get_tree(self, request):
@@ -43,3 +48,14 @@ class MenuViewSet(RbacViewSet):
         roles = request.data.get('roles')
         menu.roles.set(roles)
         return BaseResponse()
+
+    @action(detail=False, methods=['get'], url_path='options')
+    def get_options(self, request):
+        """
+        获取菜单选项列表
+        :param request:
+        :return:
+        """
+
+        menus = Menu.objects.all().order_by('id')
+        return BaseResponse(data=MenuSerializers(menus, many=True).data)

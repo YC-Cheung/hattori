@@ -19,7 +19,7 @@ class UserViewSet(RbacViewSet):
     用户管理：增删改查
     """
 
-    queryset = User.objects.all()
+    queryset = User.objects.prefetch_related('roles').all()
     serializer_class = UserSerializers
 
     @action(methods=['post'], detail=True, url_path='roles')
@@ -76,7 +76,7 @@ class UserAuthView(BaseAPIView):
         password = request.data.get('password')
         user = authenticate(username=username, password=password)
         if not user:
-            raise AuthFailedException(message='用户名或密码错误')
+            raise APIException(message='用户名或密码错误', status_code=status.HTTP_200_OK)
 
         token = generate_token(uid=user.id, type=JwtType.ADMIN.value)
         return BaseResponse(data={

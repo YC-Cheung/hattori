@@ -3,6 +3,7 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
+from common.custom import DynamicFieldsModelSerializer
 from rbac.models import Role, Perm, Menu
 
 User = get_user_model()
@@ -30,19 +31,32 @@ class UserSerializers(serializers.ModelSerializer):
     )
     roles = serializers.SerializerMethodField()
 
+    # role_ids = serializers.PrimaryKeyRelatedField(queryset=Role.objects.all(), write_only=True, many=True)
+
     def get_roles(self, obj):
-        return obj.roles.values('id', 'name', 'slug')
+        return [{'id': i.id, 'name': i.name, 'slug': i.slug} for i in obj.roles.all()]
+        # return obj.roles.values('id', 'name', 'slug')
 
     def create(self, validated_data):
         validated_data['password'] = make_password(validated_data.get('password'))
-        return super(UserSerializers, self).create(validated_data)
+        instance = super(UserSerializers, self).create(validated_data)
+        return instance
+        # role_ids = validated_data.pop('role_ids')
+        # if role_ids:
+        #     instance.roles.set(role_ids)
+        # return instance
 
     def update(self, instance, validated_data):
         validated_data.pop('username')
         password = validated_data.get('password', None)
         if password is not None:
             validated_data['password'] = make_password(password)
-        return super(UserSerializers, self).update(instance, validated_data)
+        instance = super(UserSerializers, self).update(instance, validated_data)
+        return instance
+        # role_ids = validated_data.pop('role_ids')
+        # if role_ids:
+        #     instance.roles.set(role_ids)
+        # return instance
 
     class Meta:
         model = User
@@ -77,6 +91,25 @@ class RoleSerializers(serializers.ModelSerializer):
         fields = ('id', 'name', 'slug', 'desc')
 
 
+class RoleWithAllFieldsSerializer(DynamicFieldsModelSerializer):
+    """
+    角色 带全部字段
+    """
+
+    perms = serializers.SerializerMethodField()
+    menus = serializers.SerializerMethodField()
+
+    def get_perms(self, obj):
+        return [{'id': i.id, 'name': i.name, 'slug': i.slug} for i in obj.perms.all()]
+
+    def get_menus(self, obj):
+        return [{'id': i.id, 'name': i.name, 'title': i.title} for i in obj.menus.all()]
+
+    class Meta:
+        model = Role
+        fields = ('id', 'name', 'slug', 'desc', 'perms', 'menus', 'created_at', 'updated_at')
+
+
 class PermSerializers(serializers.ModelSerializer):
     """
     权限
@@ -103,6 +136,21 @@ class PermSerializers(serializers.ModelSerializer):
     class Meta:
         model = Perm
         fields = ('id', 'name', 'slug', 'desc', 'method', 'path')
+
+
+class PermWithAllFieldsSerializer(DynamicFieldsModelSerializer):
+    """
+    权限 带全部字段
+    """
+
+    roles = serializers.SerializerMethodField()
+
+    def get_roles(self, obj):
+        return [{'id': i.id, 'name': i.name, 'slug': i.slug} for i in obj.roles.all()]
+
+    class Meta:
+        model = Perm
+        fields = ('id', 'name', 'slug', 'desc', 'method', 'path', 'roles', 'created_at', 'updated_at')
 
 
 class MenuSerializers(serializers.ModelSerializer):
@@ -147,3 +195,20 @@ class MenuSerializers(serializers.ModelSerializer):
     class Meta:
         model = Menu
         fields = ('id', 'parent', 'name', 'title', 'icon', 'path', 'component', 'is_show', 'is_cache')
+
+
+class MenuWithAllFieldsSerializers(DynamicFieldsModelSerializer):
+    """
+    菜单 全字段
+    """
+
+    roles = serializers.SerializerMethodField()
+
+    def get_roles(self, obj):
+        return [{'id': i.id, 'name': i.name, 'slug': i.slug} for i in obj.roles.all()]
+
+    class Meta:
+        model = Menu
+        fields = (
+            'id', 'parent', 'name', 'title', 'icon', 'path', 'component', 'is_show', 'is_cache', 'roles', 'created_at',
+            'updated_at')
