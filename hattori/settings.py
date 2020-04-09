@@ -143,6 +143,9 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'common.api.handlers.custom_exception_handler',
 }
 
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+
 JWT_TTL = 60 * 60 * 24 * 365
 DEFAULT_PASSWORD = '123456'
 

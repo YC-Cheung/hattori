@@ -1,7 +1,7 @@
 # hattori
 hattori api, use with vue.
 
-The project is a basic backend api to use with and use with [hattori-admin](https://github.com/YC-Cheung/hattori-admin) to form a management admin.
+The project is a basic backend api and use with [hattori-admin](https://github.com/YC-Cheung/hattori-admin) to build a management admin.
 
 # quickstart
 ```bash
